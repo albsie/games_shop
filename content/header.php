@@ -1,7 +1,8 @@
 <?php
+session_start();
+var_dump($_SESSION);
 $path_parts = pathinfo($_SERVER['REQUEST_URI']);
 $filename = $path_parts['filename'];
-echo $filename;
 
 ?>
 <!doctype html>
@@ -24,29 +25,34 @@ echo $filename;
       </a>
        <div class="collapse navbar-collapse row" id="navbarSupportedContent">
          <ul class="navbar-nav mr-auto">
-           <li class="nav-item active">
+           <li class="nav-item <?=$filename==='index'?'active':''?>">
              <a class="nav-link" href="index.php">Home</a>
            </li>
-           <li class="nav-item">
+           <li class="nav-item <?=$filename==='shop'?'active':''?>">
              <a class="nav-link" href="shop.php">Shop</a>
            </li>
-           <li class="nav-item">
-             <a class="nav-link" href="products/new.php">Produkte anlegen</a>
+           <li class="nav-item <?=$filename==='new'?'active':''?>">
+             <a class="nav-link" href="<?=$path_parts['dirname']?>/products/new.php">Produkte anlegen</a>
            </li>
-           <li class="nav-item">
+           <li class="nav-item <?=$filename==='edit'?'active':''?>">
              <a class="nav-link" href="products/edit.php">Produkte verwalten</a>
            </li>
          </ul>
          <ul class="navbar-nav mr-right">
-           <li class="nav-item">
+           <?php if(isset($_SESSION['email'])): ?>
+           <li class="nav-item <?=$filename==='shoppingcart'?'active':''?>">
              <a class="nav-link" href="shoppingcart.php">Warenkorb</a>
            </li>
-           <li class="nav-item">
-             <a class="nav-link" href="register.php">Registrieren</a>
-           </li>
-           <li class="nav-item">
+
+
+           <li class="nav-item <?=$filename==='login'?'active':''?>">
              <a class="nav-link" href="login.php">Anmelden</a>
            </li>
+         <?php else:?>
+           <li class="nav-item <?=$filename==='register'?'active':''?>">
+             <a class="nav-link" href="register.php">Registrieren</a>
+           </li>
+           <?php endif?>
          </ul>
        </div>
    </nav>
