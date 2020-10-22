@@ -1,7 +1,26 @@
 <?php
 include_once "content/header.php";
-# Erhalte alle Werte der Formularfelder mit var_dump
-var_dump($_POST);
+# Aufgabe 1: Erhalte alle Werte der Formularfelder mit var_dump
+if(isset($_POST['register'])){
+  echo "<pre>";
+  var_dump($_POST);
+  echo "</pre>";
+  $role = 1;
+  if($_POST['email'] === 'sigi@ifb.de'){ #euren eigenen alias verwenden
+    $role = 2;
+  }
+  # Aufgabe 2: Validiere alle Daten und gebe eine Fehlermeldung aus wenn:
+  # - ein Feld leer ist
+  # - firstname & lastname kleiner sind als 2 Zeichen
+  # - email kleiner ist als 5 Zeichen
+  # - password kleiner ist als 6 Zeichen
+  # - passwordRpt nicht mit password zusammenstimmt
+  # - chkbox nicht geklickt wurde
+  # - gib jeweils eine Fehlermeldung aus
+  # Aufgabe 3: bei Fehlerhafter Registrierung sollen die eingegebenen Werte enthalten bleiben.
+  # Aufgabe 4: wenn alles richtig ist öffne die shop.php
+  # Aufgabe 5: login.php mit email und password erstellen und Aufgaben 1,2,3,4 wiederholen
+}
 ?>
 <main class="container">
 
