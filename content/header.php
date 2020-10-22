@@ -1,4 +1,5 @@
 <?php
+define("ROOT_URL", 'games_shop');
 define("ROOT_PATH", "http://localhost/web/info02/games_shop/");
 $path_parts = pathinfo($_SERVER['REQUEST_URI']);
 $filename = $path_parts['filename'];
@@ -24,7 +25,7 @@ $filename = $path_parts['filename'];
       </a>
        <div class="collapse navbar-collapse row" id="navbarSupportedContent">
          <ul class="navbar-nav mr-auto">
-           <li class="nav-item <?=$filename==='index'?'active':''?>">
+           <li class="nav-item <?=$filename==='index'||$filename===ROOT_URL?'active':''?>">
              <a class="nav-link" href="<?= ROOT_PATH . 'index.php'?>">Home</a>
            </li>
            <li class="nav-item <?=$filename==='shop'?'active':''?>">
