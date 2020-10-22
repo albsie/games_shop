@@ -2,3 +2,7 @@ header nav a img{
   max-width: 50px;
   width: 50px;
 }
+main h1{
+  margin: 5vh 0;
+  text-align: center;
+}
