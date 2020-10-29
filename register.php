@@ -35,7 +35,7 @@ if(trim($_POST['email']) === ''){
 }
 if(trim($_POST['password']) === ''){
   $errors['password'] = "Geben Sie einen Wert ein";
-} elseif (strlen($_POST['password']) <= 6) {
+} elseif (strlen($_POST['password']) < 6) {
   $errors['password'] = "Ihre Eingabe muss 6 Zeichen haben";
 }
 if($_POST['password'] !== $_POST['passwordRpt']){
@@ -45,7 +45,16 @@ if($_POST['chkbox']=== 'off'){
   $errors['chkbox'] = "Bitte bestätigen Sie die AGB's";
 }
 if(count($errors)===0){
-  header('shop.php');
+  //start Session
+  session_start();
+  $_SESSION['firstname'] = $_POST['firstname'];
+  $_SESSION['lastname'] = $_POST['lastname'];
+  $_SESSION['email'] = $_POST['email'];
+  header('Location: shop.php');
+} else{
+  session_unset();
+  session_destroy();
+  $_SESSION = [];
 }
 }
 ?>

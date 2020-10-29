@@ -1,4 +1,5 @@
 <?php
+session_start();
 # root path for the index.php
 define("ROOT_URL", 'games_shop');
 # development root path
@@ -6,7 +7,6 @@ define("ROOT_PATH", "http://localhost/web/info02/games_shop/");
 
 $path_parts = pathinfo($_SERVER['REQUEST_URI']);
 $filename = $path_parts['filename'];
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -43,8 +43,14 @@ $filename = $path_parts['filename'];
          </ul>
          <ul class="navbar-nav mr-right">
            <?php if(isset($_SESSION['email'])): ?>
+             <li class="nav-item active">
+               <span class="nav-link">Hallo <?=isset($_SESSION['firstname'])?$_SESSION['firstname']:'';?></span>
+             </li>
            <li class="nav-item <?=$filename==='shoppingcart'?'active':''?>">
              <a class="nav-link" href="<?= ROOT_PATH . 'shoppingcart.php'?>">Warenkorb</a>
+           </li>
+           <li class="nav-item <?=$filename==='logout'?'active':''?>">
+              <a class="nav-link" href="<?= ROOT_PATH . 'logout.php'?>">Abmelden</a>
            </li>
             <?php else:?>
            <li class="nav-item <?=$filename==='login'?'active':''?>">
