@@ -76,13 +76,14 @@ if(count($errors)===0){
   <div class="form-group">
     <label for="passwordRpt">Passwort Wiederholen</label>
     <input type="password" name="passwordRpt" class="form-control" id="passwordRpt">
-<?= isset($errors['firstname'])?'<div class="error">'. $errors['firstname'] . '</div>':''?>
+<?= isset($errors['passwordRpt'])?'<div class="error">'. $errors['passwordRpt'] . '</div>':''?>
   </div>
   <div class="form-group form-check">
     <input type="hidden" name="chkbox" value="off">
-    <input type="checkbox" name="chkbox" class="form-check-input" id="chkbox">
+    <input type="checkbox" name="chkbox" class="form-check-input" id="chkbox"
+    <?=isset($_POST['chkbox'])&& $_POST['chkbox']==='on'?'checked': ''?>>
     <label class="form-check-label" for="chkbox">Bestätige die AGB's</label>
-<?= isset($errors['firstname'])?'<div class="error">'. $errors['firstname'] . '</div>':''?>
+<?= isset($errors['chkbox'])?'<div class="error">'. $errors['chkbox'] . '</div>':''?>
   </div>
   <button type="submit" name="register" class="btn btn-primary">Registrieren</button>
 </form>

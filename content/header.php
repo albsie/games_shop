@@ -46,10 +46,10 @@ $filename = $path_parts['filename'];
            <li class="nav-item <?=$filename==='shoppingcart'?'active':''?>">
              <a class="nav-link" href="<?= ROOT_PATH . 'shoppingcart.php'?>">Warenkorb</a>
            </li>
+            <?php else:?>
            <li class="nav-item <?=$filename==='login'?'active':''?>">
              <a class="nav-link" href="<?= ROOT_PATH . 'login.php'?>">Anmelden</a>
            </li>
-         <?php else:?>
            <li class="nav-item <?=$filename==='register'?'active':''?>">
              <a class="nav-link" href="<?= ROOT_PATH . 'register.php'?>">Registrieren</a>
            </li>
