@@ -1,5 +1,7 @@
 <?php
-session_start();
+if(session_id() == '' || !isset($_SESSION)) {
+    session_start();
+}
 # root path for the index.php
 define("ROOT_URL", 'games_shop');
 # development root path

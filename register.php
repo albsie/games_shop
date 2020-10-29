@@ -30,7 +30,7 @@ if($_POST['lastname'] === ''){
 }
 if(trim($_POST['email']) === ''){
   $errors['email'] = "Geben Sie einen Wert ein";
-} elseif (strlen($_POST['email']) < 5) {
+} elseif (strlen($_POST['email']) <= 5) {
   $errors['email'] = "Ihre Eingabe ist nicht korrekt";
 }
 if(trim($_POST['password']) === ''){
@@ -46,7 +46,9 @@ if($_POST['chkbox']=== 'off'){
 }
 if(count($errors)===0){
   //start Session
-  session_start();
+  if(session_id() == '' || !isset($_SESSION)) {
+      session_start();
+  }
   $_SESSION['firstname'] = $_POST['firstname'];
   $_SESSION['lastname'] = $_POST['lastname'];
   $_SESSION['email'] = $_POST['email'];
