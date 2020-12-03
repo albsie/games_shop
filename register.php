@@ -1,37 +1,32 @@
 <?php
-include_once "content/header.php";
+require_once "config/db.php"; # schmeist ein Fatal Error
+include_once "content/header.php"; # schmeist es ein Warning
+
 # Aufgabe 1: Erhalte alle Werte der Formularfelder mit var_dump
 $errors = [];
 if(isset($_POST['register'])){
-  $role = 1;
-  if($_POST['email'] === 'sigi@ifb.de'){ #euren eigenen alias verwenden
-    $role = 2;
-  }
-  # Aufgabe 2: Validiere alle Daten und gebe eine Fehlermeldung aus wenn:
-  # - ein Feld leer ist
-  # - firstname & lastname kleiner sind als 2 Zeichen
-  # - email kleiner ist als 5 Zeichen
-  # - password kleiner ist als 6 Zeichen
-  # - passwordRpt nicht mit password zusammenstimmt
-  # - chkbox nicht geklickt wurde
-  # - gib jeweils eine Fehlermeldung aus
-  # Aufgabe 3: bei Fehlerhafter Registrierung sollen die eingegebenen Werte enthalten bleiben.
-  # Aufgabe 4: wenn alles richtig ist öffne die shop.php
-  # Aufgabe 5: login.php mit email und password erstellen und Aufgaben 1,2,3,4 wiederholen
+$email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+var_dump($email);
 if($_POST['firstname'] === ''){
   $errors['firstname'] = "Geben Sie einen Wert ein";
 } elseif (strlen($_POST['firstname']) < 3) {
   $errors['firstname'] = "Ihre Eingabe ist zu klein";
+} else{
+  $firstname = $_POST['firstname'];
 }
 if($_POST['lastname'] === ''){
   $errors['lastname'] = "Geben Sie einen Wert ein";
 } elseif (strlen($_POST['lastname']) < 3) {
   $errors['lastname'] = "Ihre Eingabe ist zu klein";
+} else {
+  $lastname = $_POST['lastname'];
 }
-if(trim($_POST['email']) === ''){
+if(trim($email) === ''){
   $errors['email'] = "Geben Sie einen Wert ein";
 } elseif (strlen($_POST['email']) <= 5) {
   $errors['email'] = "Ihre Eingabe ist nicht korrekt";
+} else{
+  $email = $_POST['email'];
 }
 if(trim($_POST['password']) === ''){
   $errors['password'] = "Geben Sie einen Wert ein";
@@ -40,11 +35,26 @@ if(trim($_POST['password']) === ''){
 }
 if($_POST['password'] !== $_POST['passwordRpt']){
   $errors['passwordRpt'] = "Ihre Passwörter stimmen nicht überein";
+} else {
+  $password = $_POST['password'];
 }
 if($_POST['chkbox']=== 'off'){
   $errors['chkbox'] = "Bitte bestätigen Sie die AGB's";
+} else{
+  $conditions = 1;
 }
 if(count($errors)===0){
+  $password = password_hash($password, PASSWORD_BCRYPT);
+  $insert = "INSERT INTO users (
+    firstname, lastname, email, password, conditions)
+  VALUES (
+    '$firstname',
+    '$lastname',
+    '$email',
+    '$password',
+    '$conditions'
+  )";
+  mysqli_query($con, $insert) or die(mysqli_error($con));
   //start Session
   if(session_id() == '' || !isset($_SESSION)) {
       session_start();

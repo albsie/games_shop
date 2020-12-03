@@ -1,4 +1,5 @@
 <?php
+require_once "config/db.php"; # schmeist ein Fatal Error
 include_once "content/header.php";
 #Arbeitsauftrag:
 #1. Erstelle ein Login Formular mit Email und Passwort
@@ -10,31 +11,51 @@ include_once "content/header.php";
 #     - firstname = euer Name (Übergangslösung bis wir die Datenbank starten)
 $errors = [];
 if(isset($_POST['login'])){
-  $mypassword = "123123";
-  $myemail = "test@test.de";
+
   if(trim($_POST['email']) === ''){
     $errors['email'] = "Geben Sie einen Wert ein";
   } elseif (strlen($_POST['email']) <= 5) {
     $errors['email'] = "Ihre Eingabe ist nicht korrekt";
-  } elseif ($_POST['email'] !== $myemail) {
-    $errors['email'] = "Ihre Email oder Ihr Passwort ist falsch";
-    $errors['password'] = "Ihre Email oder Ihr Passwort ist falsch";
+  } else {
+    $email = $_POST['email'];
   }
+
   if(trim($_POST['password']) === ''){
     $errors['password'] = "Geben Sie einen Wert ein";
   } elseif (strlen($_POST['password']) < 6) {
     $errors['password'] = "Ihre Eingabe muss 6 Zeichen haben";
-  } elseif ($_POST['password'] !== $mypassword) {
-    $errors['password'] = "Ihre Email oder Ihr Passwort ist falsch";
-    $errors['email'] = "Ihre Email oder Ihr Passwort ist falsch";
+  } else {
+    $password = $_POST['password'];
   }
+
   if(count($errors) === 0){
-    if(session_id() == '' || !isset($_SESSION)) {
-        session_start();
+    #mysqli_real_escape_string
+    # filter
+    # prepare
+    # execute 
+    $query = mysqli_query($con, "SELECT id, email, firstname, lastname, password  FROM users WHERE email = '$email'") or die(mysqli_error($con));
+    $data = mysqli_fetch_assoc($query);
+
+    if(mysqli_num_rows($query) === 1){
+      $passwordVerify = password_verify($password, $data['password']);
+    } else {
+      $passwordVerify = false;
     }
-    $_SESSION['email'] = $_POST['email'];
-    $_SESSION['firstname'] = "Sieghard";
-    header('Location: shop.php');
+
+    if($passwordVerify){
+      if(session_id() == '' || !isset($_SESSION)) {
+          session_start();
+      }
+      $_SESSION['id'] = $data['id'];
+      $_SESSION['email'] = $data['email'];
+      $_SESSION['firstname'] = $data['firstname'];
+      $_SESSION['lastname'] = $data['lastname'];
+
+      header('Location: shop.php');
+    } else {
+      $errors['email'] = "Ihr Benutzername oder Ihr Passwort ist falsch";
+      $errors['password'] = "Ihr Benutzername oder Ihr Passwort ist falsch";
+    }
   } else {
     session_unset();
     session_destroy();
