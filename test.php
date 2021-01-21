@@ -1,0 +1,4 @@
+<?php
+$teacher = "Alber";
+$students = [];
+?>
