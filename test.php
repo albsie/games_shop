@@ -1,4 +1,4 @@
 <?php
 $teacher = "Alber";
-$students = ["Xaver"];
+$students = ["Xaver", "Leo"];
 ?>
