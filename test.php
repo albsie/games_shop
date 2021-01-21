@@ -1,5 +1,5 @@
 <?php
 $teacher = "Alber";
-$students = ["Xaver", "Leo", "Manuel"];
+$students = ["Xaver", "Leo", "Manuel", "albsie"];
 
 ?>
