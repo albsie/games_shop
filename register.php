@@ -74,6 +74,7 @@ try {
     if(session_id() == '' || !isset($_SESSION)) {
         session_start();
     }
+    $_SESSION['id'] = $con->lastInsertId();
     $_SESSION['firstname'] = $firstname;
     $_SESSION['lastname'] = $lastname;
     $_SESSION['email'] = $email;

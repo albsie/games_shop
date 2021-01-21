@@ -19,7 +19,7 @@ $filename = $path_parts['filename'];
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-      <link rel="stylesheet" href="<?= ROOT_PATH . 'css/master.css'?>">
+      <link rel="stylesheet" href="<?= ROOT_PATH . 'css/master.css?t=' . time()?>">
     <title>Spiele Shop</title>
   </head>
   <body>
@@ -41,6 +41,9 @@ $filename = $path_parts['filename'];
            </li>
            <li class="nav-item <?=$filename==='edit'?'active':''?>">
              <a class="nav-link" href="<?= ROOT_PATH . 'products/edit.php'?>">Produkte verwalten</a>
+           </li>
+           <li class="nav-item <?=$filename==='settings'?'active':''?>">
+             <a class="nav-link" href="<?= ROOT_PATH . 'products/settings.php'?>">Einstellungen</a>
            </li>
          </ul>
          <ul class="navbar-nav mr-right">
