@@ -7,7 +7,9 @@ $select = "SELECT * FROM products";
 $productItems = $con->query($select) or die(mysqli_error($con));
 ?>
 <?php
-# update Befehl für den Button
+
+###  update Befehl für den Button
+
 if (isset($_POST['register'])) {
   $SQL_String = "UPDATE products SET price = :price, amount = :amount WHERE id = :id";
   try {
@@ -20,20 +22,23 @@ if (isset($_POST['register'])) {
   } catch(PDOException $e){
   }
 }
+
  ?>
 <main class="container">
   <section>
     <h2>Produkte verwalten</h2>
     <div class="products">
       <form method="post" class="form-inline">
-
         <label for="products">Produkt auswählen</label>
         <select id="products" name="products">
+
+          <!-- fills select box with names -->
           <?php foreach ($productItems as $key => $value): ?>
             <option value=<?=$value['id'] ?>>
               <?= $value['name'] ?>
             </option>
           <?php endforeach ?>
+
         </select>
 
 
