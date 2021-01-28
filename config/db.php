@@ -2,7 +2,7 @@
 
 # Database Connection
 $host = "localhost";
-$dbname = "games_shop";
+$dbname = "gamees_shop";
 $username = "root";
 $password = "";
 
