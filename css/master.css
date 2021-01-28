@@ -24,3 +24,11 @@ footer{
 h2{
   margin: 10vh 0;
 }
+.form-Inline{
+  display: grid;
+  grid-gap: 2.5vh;
+  width: 30%;
+}
+.btn btn-primary mx-sm-5 mb-3 form-group{
+  height: 30px;
+}
