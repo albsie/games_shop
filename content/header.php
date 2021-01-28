@@ -5,7 +5,7 @@ if(session_id() == '' || !isset($_SESSION)) {
 # root path for the index.php
 define("ROOT_URL", 'games_shop');
 # development root path
-define("ROOT_PATH", "http://localhost/IFB/games_shop/");
+define("ROOT_PATH", "http://localhost/web/games_shop/");
 
 $path_parts = pathinfo($_SERVER['REQUEST_URI']);
 $filename = $path_parts['filename'];
