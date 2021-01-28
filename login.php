@@ -32,8 +32,8 @@ if(isset($_POST['login'])){
     #mysqli_real_escape_string
     # filter
     # prepare
-    # execute 
-    $query = mysqli_query($con, "SELECT id, email, firstname, lastname, password  FROM users WHERE email = '$email'") or die(mysqli_error($con));
+    # execute
+    $query = mysqli_query($con, "SELECT id, email, firstname, lastname, password FROM users WHERE email = '$email'") or die(mysqli_error($con));
     $data = mysqli_fetch_assoc($query);
 
     if(mysqli_num_rows($query) === 1){
