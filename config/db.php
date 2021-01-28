@@ -10,3 +10,5 @@ $password = "";
 
 $con = new PDO('mysql:host=localhost;dbname=games_shop',$username, $password) or die("Verbindung fehlgeschlagen");
 $con->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+
+//test Louis
