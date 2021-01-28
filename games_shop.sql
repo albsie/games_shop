@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Erstellungszeit: 03. Dez 2020 um 09:54
--- Server-Version: 10.4.11-MariaDB
--- PHP-Version: 7.4.3
+-- Host: localhost
+-- Erstellungszeit: 28. Jan 2021 um 10:50
+-- Server-Version: 10.4.17-MariaDB
+-- PHP-Version: 8.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -21,6 +20,39 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `games_shop`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `genre`
+--
+
+CREATE TABLE `genre` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `products`
+--
+
+CREATE TABLE `products` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `publisher` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `release_date` datetime DEFAULT NULL,
+  `genre_id` tinyint(3) UNSIGNED NOT NULL,
+  `price` decimal(10,2) UNSIGNED NOT NULL,
+  `amount` smallint(6) NOT NULL,
+  `usk_id` tinyint(3) UNSIGNED NOT NULL,
+  `img_path` varchar(20000) CHARACTER SET utf8 NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -40,21 +72,46 @@ CREATE TABLE `users` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Daten für Tabelle `users`
+-- Tabellenstruktur für Tabelle `usk`
 --
 
-INSERT INTO `users` (`id`, `email`, `firstname`, `lastname`, `password`, `conditions`, `activ`, `updated_at`, `created_at`) VALUES
-(2, 'albsie@ifb.de', 'Sieghard', 'Alber', '$2y$10$wSZGPQZ1hsCBUnOnnTus/uHyrpL3pS2dIkw0WF30FYwk6kKf1CTdG', 1, 1, '2020-11-26 10:24:10', '2020-11-26 11:24:10');
+CREATE TABLE `usk` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `usk` tinyint(3) UNSIGNED NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indizes der exportierten Tabellen
 --
 
 --
+-- Indizes für die Tabelle `genre`
+--
+ALTER TABLE `genre`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indizes für die Tabelle `users`
 --
 ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indizes für die Tabelle `usk`
+--
+ALTER TABLE `usk`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -62,10 +119,28 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT für Tabelle `genre`
+--
+ALTER TABLE `genre`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT für Tabelle `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `usk`
+--
+ALTER TABLE `usk`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
