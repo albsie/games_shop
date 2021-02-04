@@ -57,9 +57,7 @@ if (isset($_POST['register'])) {
               <td>
                 <?php foreach ($con->query($select) as $key => $value): ?>
                   <?php if (isset($_POST['id']) && $_POST['id'] == $value['id']): ?>
-                    <option>
                       <?= $value['name'] ?>
-                    </option>
                   <?php endif; ?>
                 <?php endforeach ?>
               </td>
@@ -70,9 +68,7 @@ if (isset($_POST['register'])) {
               <td>
                 <?php foreach ($con->query($select) as $key => $value): ?>
                   <?php if (isset($_POST['id']) && $_POST['id'] == $value['id']): ?>
-                    <option>
                       <?= $value['publisher'] ?>
-                    </option>
                   <?php endif; ?>
                 <?php endforeach ?>
               </td>
@@ -83,9 +79,7 @@ if (isset($_POST['register'])) {
               <td>
                 <?php foreach ($con->query($select) as $key => $value): ?>
                   <?php if (isset($_POST['id']) && $_POST['id'] == $value['id']): ?>
-                    <option>
                       <?= $value['release_date'] ?>
-                    </option>
                   <?php endif; ?>
                 <?php endforeach ?>
               </td>
@@ -96,9 +90,7 @@ if (isset($_POST['register'])) {
               <td>
                 <?php foreach ($con->query($select) as $key => $value): ?>
                   <?php if (isset($_POST['id']) && $_POST['id'] == $value['id']): ?>
-                    <option>
                       <?= $value['price'] ?>
-                    </option>
                   <?php endif; ?>
                 <?php endforeach ?>
               </td>
@@ -109,9 +101,7 @@ if (isset($_POST['register'])) {
               <td>
                 <?php foreach ($con->query($select) as $key => $value): ?>
                   <?php if (isset($_POST['id']) && $_POST['id'] == $value['id']): ?>
-                    <option>
                       <?= $value['amount'] ?>
-                    </option>
                   <?php endif; ?>
                 <?php endforeach ?>
               </td>
@@ -122,9 +112,7 @@ if (isset($_POST['register'])) {
               <td>
                 <?php foreach ($con->query($select) as $key => $value): ?>
                   <?php if (isset($_POST['id']) && $_POST['id'] == $value['id']): ?>
-                    <option>
                       <?= $value['usk_id'] ?>
-                    </option>
                   <?php endif; ?>
                 <?php endforeach ?>
               </td>
