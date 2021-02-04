@@ -32,13 +32,20 @@ if (isset($_POST['register'])) {
       <form method="post" class="form-inline">
           <label for="products">Produkt auswählen: </label>
           <select id="products" name="products">
+            <?php if (!isset($_POST["id"])): ?>
+              <option value=-1 disabled selected>
+              </option>
+            <?php endif; ?>
+
             <?php foreach ($con->query($select) as $key => $value): ?>
               <option value=<?=$value['id']?> <?=isset($_POST['id']) && $_POST['id'] == $value['id']  ? "selected='selected'": ""?>>
                 <?= $value['name'] ?>
               </option>
                 <?php endforeach ?>
           </select>
+          <?php if (isset($_POST["id"])): ?>
           <button type="submit" name="register" class="btn btn-primary mx-sm-5 mb-3 form-group">Speichern</button>
+          <?php endif; ?>
           </div>
           <table>
             <tr>
