@@ -24,7 +24,6 @@ if (!is_dir("../assets/productIMG")){
 }
 */
 $path = $_FILES['productIMG']['name'];
-var_dump($path);
 move_uploaded_file($_FILES['productIMG']['tmp_name'], "../assets/productIMG/". $path);
 
 if($productName === ''){
