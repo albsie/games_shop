@@ -5,7 +5,6 @@ require_once "../config/config.php";
 include_once "../content/header.php";
 
 $select = "SELECT * FROM products";
-var_dump($_POST);
 
 ###  update Befehl für den Button
 
