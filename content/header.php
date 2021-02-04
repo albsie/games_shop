@@ -1,11 +1,10 @@
 <?php
+require_once("../config/init.php");
 if(session_id() == '' || !isset($_SESSION)) {
     session_start();
 }
 # root path for the index.php
-define("ROOT_URL", 'gamesshop');
-# development root path
-define("ROOT_PATH", "http://localhost/web/info02/gamesshop/");
+
 
 $path_parts = pathinfo($_SERVER['REQUEST_URI']);
 $filename = $path_parts['filename'];

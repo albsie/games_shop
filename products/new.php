@@ -9,11 +9,10 @@ if(isset($_POST['newProduct'])){
 $productName = filter_var($_POST['productName'], FILTER_SANITIZE_STRING);
 $productPublisher = filter_var($_POST['productPublisher'], FILTER_SANITIZE_STRING);
 $productDate = filter_var($_POST['productDate'], FILTER_SANITIZE_STRING);
-$productGenre = filter_var($_POST['productGenre'], FILTER_SANITIZE_STRING);
+$productGenre = filter_var($_POST['productGenre'], FILTER_SANITIZE_INT);
 $productPrice = filter_var($_POST['productPrice'], FILTER_SANITIZE_STRING);
-$productAmount = filter_var($_POST['productAmount'], FILTER_VALIDATE_NUMBER_INT);
-$productUSK = filter_var($_POST['productUSK'], FILTER_VALIDATE_NUMBER_INT);
-$productIMG = filter_var($_POST['productIMG'], FILTER_VALIDATE_STRING);
+$productAmount = filter_var($_POST['productAmount'], FILTER_VALIDATE_INT);
+$productUSK = filter_var($_POST['productUSK'], FILTER_VALIDATE_INT);
 
 
 if($productName === ''){
@@ -67,8 +66,6 @@ try {
   ]);
 } catch(PDOException $e){
     if ($e->getCode() == 23000) {
-         $errors['email'] = "Email Adresse ist bereits vorhanden";
-   } else {
         $errors['other'] = "Etwas hat nicht funktioniert, versuchen Sie es noch einmal";
    }
 }
