@@ -1,4 +1,5 @@
 <?php
+require_once('../config/init.php');
 require_once('../config/config.php');
 require_once "../config/db.php";
 include_once "../content/header.php";
@@ -8,7 +9,7 @@ $errors = [];
 if(isset($_POST['newProduct'])){
 $productName = filter_var($_POST['productName'], FILTER_SANITIZE_STRING);
 $productPublisher = filter_var($_POST['productPublisher'], FILTER_SANITIZE_STRING);
-#$productDate = filter_var($_POST['productDate'], FILTER_SANITIZE_INT);
+$productDate = $_POST['productDate'];
 $productGenre = filter_var($_POST['productGenre'], FILTER_SANITIZE_INT);
 $productPrice = filter_var($_POST['productPrice'], FILTER_SANITIZE_INT);
 $productAmount = filter_var($_POST['productAmount'], FILTER_VALIDATE_INT);
