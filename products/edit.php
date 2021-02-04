@@ -25,7 +25,7 @@ if (isset($_POST['register'])) {
 }
 
  ?>
-<main class="container">
+<main class="container" id="editMain">
 <section>
   <h2>Produkte verwalten</h2>
   <div class="products">
