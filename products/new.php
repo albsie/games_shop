@@ -10,11 +10,11 @@ if(isset($_POST['newProduct'])){
 $productName = filter_var($_POST['productName'], FILTER_SANITIZE_STRING);
 $productPublisher = filter_var($_POST['productPublisher'], FILTER_SANITIZE_STRING);
 $productDate = $_POST['productDate'];
-$productGenre = filter_var($_POST['productGenre'], FILTER_SANITIZE_INT);
-$productPrice = filter_var($_POST['productPrice'], FILTER_SANITIZE_INT);
+$productGenre = $_POST['productGenre'];
+$productPrice = filter_var($_POST['productPrice'], FILTER_SANITIZE_NUMBER_FLOAT);
 $productAmount = filter_var($_POST['productAmount'], FILTER_VALIDATE_INT);
-$productUSK = filter_var($_POST['productUSK'], FILTER_VALIDATE_INT);
-$productIMG = $_POST['productIMG'];
+$productUSK = $_POST['productUSK'];
+#$productIMG = $_POST['productIMG'];
 
 
 if($productName === ''){
@@ -38,17 +38,18 @@ if($productAmount ===''){
 if($productUSK ===''){
   $errors['productUSK'] = "Geben Sie einen Wert ein";
 }
+/*
 if($productIMG ===''){
   $errors['productIMG'] = "Geben Sie einen Wert ein";
 }
-
+*/
 #var_dump($productIMG);
-copy($productIMG,"files");
+#copy($productIMG,"files");
 
 
 if(count($errors)===0){
   $insert = "INSERT INTO products (
-    productName, productPublisher, productDate, productGenre, productPrice, productAmount, productUSK, productIMG)
+    name, publisher, release_date, genre_id, price, amount, usk_id)
   VALUES (
     :productName,
     :productPublisher,
@@ -56,8 +57,7 @@ if(count($errors)===0){
     :productGenre,
     :productPrice,
     :productAmount,
-    :productUSK,
-    :productIMG
+    :productUSK
   )";
 try {
   $state = $con->prepare($insert);
@@ -65,11 +65,11 @@ try {
     'productName' => $productName,
     'productPublisher' => $productPublisher,
     'productDate' => $productDate,
-    'productGenre' => $procutGenre,
+    'productGenre' => $productGenre,
     'productPrice' => $productPrice,
     'productAmount' => $productAmount,
     'productUSK' => $productUSK,
-    'productIMG' => $productIMG
+    #'productIMG' => $productIMG
   ]);
 } catch(PDOException $e){
     if ($e->getCode() == 23000) {
@@ -101,7 +101,7 @@ $uskItems = $con->query($select) or die(mysqli_error($con));
           </option>
         <?php endforeach ?>
       </select>
-      <input type="number" name="productPrice" class="form-control  mb-3 form-group" id="product" aria-describedby="Genre" placeholder="Preis">
+      <input type="number" step=".01" name="productPrice" class="form-control  mb-3 form-group" id="product" aria-describedby="Genre" placeholder="Preis">
       <input type="number" name="productAmount" class="form-control  mb-3 form-group" id="product" aria-describedby="Genre" placeholder="Anzahl">
       <select id="usk" name="productUSK" class="form-control  mb-3 form-group">
         <?php foreach ($uskItems as $key => $value): ?>
