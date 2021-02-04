@@ -1,4 +1,5 @@
 <?php
+require_once "../config/init.php";
 require_once "../config/db.php";
 require_once "../config/config.php";
 include_once "../content/header.php";
@@ -33,9 +34,9 @@ $select = "SELECT * FROM genre";
   </div>
 </section>
 <select class="" name="">
-  <?php foreach ($con->query($select) as $key => $valueu): ?>
-    <option value="<?=$valueu['name'];?>">
-      <?=$valueu['name'];?>
+  <?php foreach ($con->query($select) as $key => $value): ?>
+    <option value="<?=$value['name'];?>">
+      <?=$value['name'];?>
     </option>
   <?php endforeach ?>
 </select>

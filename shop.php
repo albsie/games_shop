@@ -2,7 +2,8 @@
 if(!isset($_SESSION['email'])){
   session_start();
 }
-require_once('config/config.php');
+require_once "config/init.php";
+require_once 'config/config.php';
 include_once "content/header.php";
 ?>
 <main class="container">
