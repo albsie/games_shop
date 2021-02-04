@@ -5,16 +5,17 @@ require_once "../config/config.php";
 include_once "../content/header.php";
 
 $select = "SELECT * FROM products";
-
-?>
-<?php
+var_dump($_POST);
 
 ###  update Befehl für den Button
 
 if (isset($_POST['register'])) {
   $SQL_String = "UPDATE products SET price = :price, amount = :amount WHERE id = :id";
   try {
-    $state = $con->prepare($insert);
+    $state = $con->prepare($SQL_String);
+    $price = $_POST['price'];
+    $amount = $_POST['amount'];
+    $id = $_POST['id'];
     $state->execute([
       'price' => $price,
       'amount' => $amount,
@@ -31,7 +32,7 @@ if (isset($_POST['register'])) {
   <div class="products">
       <form method="post" class="form-inline">
           <label for="products">Produkt auswählen: </label>
-          <select id="products" name="products">
+          <select id="products" name="id">
             <?php if (!isset($_POST["id"])): ?>
               <option value=-1 disabled selected>
               </option>
