@@ -16,12 +16,11 @@ try{
   }
 }
 $select = "SELECT * FROM genre";
-$genreItems = $con->query($select) or die(mysqli_error($con));
 ?>
 <main class="container">
 <section>
   <h2>Genre verwalten</h2>
-  <?php foreach ($genreItems as $key => $value): ?>
+  <?php foreach ($con->query($select) as $key => $value): ?>
     <div class="">
       <?= $value['name'] ?>
     </div>
@@ -33,6 +32,13 @@ $genreItems = $con->query($select) or die(mysqli_error($con));
     </form>
   </div>
 </section>
+<select class="" name="">
+  <?php foreach ($con->query($select) as $key => $valueu): ?>
+    <option value="<?=$valueu['name'];?>">
+      <?=$valueu['name'];?>
+    </option>
+  <?php endforeach ?>
+</select>
 </main>
 <?php
 include_once "../content/footer.php";
