@@ -31,3 +31,6 @@ table, th, td {
 #editMain label{
   margin: 10px;
 }
+#editMain button{
+  margin: 10px 48px;
+/*padding: 10;*/}
