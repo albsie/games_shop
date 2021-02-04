@@ -1,4 +1,5 @@
 <?php
+require_once "config\init.php";
 require_once "config/db.php"; # schmeist ein Fatal Error
 include_once "content/header.php";
 #Arbeitsauftrag:
@@ -32,7 +33,7 @@ if(isset($_POST['login'])){
     #mysqli_real_escape_string
     # filter
     # prepare
-    # execute 
+    # execute
     $query = mysqli_query($con, "SELECT id, email, firstname, lastname, password  FROM users WHERE email = '$email'") or die(mysqli_error($con));
     $data = mysqli_fetch_assoc($query);
 
