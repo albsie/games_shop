@@ -2,7 +2,7 @@
 if(session_id() == '' || !isset($_SESSION)) {
     session_start();
 }
-require_once("../config/init.php");
+require_once(dirname(__FILE__) . "/../config/init.php");
 
 $path_parts = pathinfo($_SERVER['REQUEST_URI']);
 $filename = $path_parts['filename'];
