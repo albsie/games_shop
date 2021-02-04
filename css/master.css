@@ -35,6 +35,9 @@ table td{
 #editMain label{
   margin: 10px;
 }
+#editMain div{
+  align-items: center;
+}
 #editMain button{
-  margin: 10px 48px;
-/*padding: 10;*/}
+  margin-top: 15px;
+}

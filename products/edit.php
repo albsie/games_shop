@@ -147,11 +147,11 @@ if (isset($_POST['register'])) {
 
   document.body.appendChild(form);
   form.submit();
-}
-var select = document.getElementById("products");
-select.addEventListener("change", () =>{
-  post('', {'id': select.value});
-});
+  }
+  var select = document.getElementById("products");
+  select.addEventListener("change", () =>{
+    post('', {'id': select.value});
+  });
 </script>
 <?php
 include_once "../content/footer.php";
