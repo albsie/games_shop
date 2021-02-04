@@ -44,6 +44,10 @@ if (isset($_POST['register'])) {
                 <?php endforeach ?>
           </select>
           <?php if (isset($_POST["id"])): ?>
+            <label for="price">Preis:  </label>
+            <input id="price" type="text" name="price" value="">
+            <label for="amount"> Anzahl: </label>
+            <input id="amount" type="text" name="amount" value="">
           <button type="submit" name="register" class="btn btn-primary mx-sm-5 mb-3 form-group">Speichern</button>
           <?php endif; ?>
           </div>
