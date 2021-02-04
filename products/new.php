@@ -15,8 +15,17 @@ $productGenre = $_POST['productGenre'];
 $productPrice = filter_var($_POST['productPrice'], FILTER_SANITIZE_NUMBER_FLOAT);
 $productAmount = filter_var($_POST['productAmount'], FILTER_VALIDATE_INT);
 $productUSK = $_POST['productUSK'];
-#$productIMG = $_POST['productIMG'];
-
+if (!file_exists("../assets/productIMG")){
+  mkdir("../assets/productIMG",0777,true);
+}
+/*
+if (!is_dir("../assets/productIMG")){
+  mkdir("../assets/productIMG",0777,true);
+}
+*/
+$path = $_FILES['productIMG']['name'];
+var_dump($path);
+move_uploaded_file($_FILES['productIMG']['tmp_name'], "../assets/productIMG/". $path);
 
 if($productName === ''){
   $errors['productName'] = "Geben Sie einen Wert ein";
@@ -51,7 +60,7 @@ if($productIMG ===''){
 if(count($errors)===0){
   $_POST = [];
   $insert = "INSERT INTO products (
-    name, publisher, release_date, genre_id, price, amount, usk_id)
+    name, publisher, release_date, genre_id, price, amount, usk_id, img_path)
   VALUES (
     :productName,
     :productPublisher,
@@ -59,7 +68,8 @@ if(count($errors)===0){
     :productGenre,
     :productPrice,
     :productAmount,
-    :productUSK
+    :productUSK,
+    :productIMG
   )";
 try {
   $state = $con->prepare($insert);
@@ -70,8 +80,8 @@ try {
     'productGenre' => $productGenre,
     'productPrice' => $productPrice,
     'productAmount' => $productAmount,
-    'productUSK' => $productUSK
-    #'productIMG' => $productIMG
+    'productUSK' => $productUSK,
+    'productIMG' => $path
   ]);
 } catch(PDOException $e){
     if ($e->getCode() == 23000) {
@@ -91,7 +101,7 @@ $uskItems = $con->query($select) or die(mysqli_error($con));
   <section>
     <h2>Neue Produkte</h2>
     <div class="newProduct">
-      <form method="post" class="form-inline">
+      <form method="post" class="form-inline" enctype="multipart/form-data">
       <input type="text" name="productName" class="form-control  mb-3 form-group" id="product" aria-describedby="Genre" placeholder="Produktname">
       <input type="text" name="productPublisher" class="form-control  mb-3 form-group" id="product" aria-describedby="Genre" placeholder="Publisher">
       <input type="date" name="productDate" class="form-control  mb-3 form-group" id="product" aria-describedby="Genre" placeholder="Erscheinungsdatum">
