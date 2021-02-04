@@ -6,6 +6,7 @@ include_once "../content/header.php";
 
 $errors = [];
 
+
 if(isset($_POST['newProduct'])){
 $productName = filter_var($_POST['productName'], FILTER_SANITIZE_STRING);
 $productPublisher = filter_var($_POST['productPublisher'], FILTER_SANITIZE_STRING);
@@ -48,6 +49,7 @@ if($productIMG ===''){
 
 
 if(count($errors)===0){
+  $_POST = [];
   $insert = "INSERT INTO products (
     name, publisher, release_date, genre_id, price, amount, usk_id)
   VALUES (
@@ -68,19 +70,18 @@ try {
     'productGenre' => $productGenre,
     'productPrice' => $productPrice,
     'productAmount' => $productAmount,
-    'productUSK' => $productUSK,
+    'productUSK' => $productUSK
     #'productIMG' => $productIMG
   ]);
 } catch(PDOException $e){
     if ($e->getCode() == 23000) {
-         $errors['email'] = "Email Adresse ist bereits vorhanden";
+         $errors['productName'] = "Game ist bereits vorhanden";
    } else {
         $errors['other'] = "Etwas hat nicht funktioniert, versuchen Sie es noch einmal";
    }
 }
 }
 }
-
 $select = "SELECT * FROM genre";
 $genreItems = $con->query($select) or die(mysqli_error($con));
 $select = "SELECT * FROM usk";
@@ -112,6 +113,7 @@ $uskItems = $con->query($select) or die(mysqli_error($con));
       </select>
       <input type="file" name="productIMG" class="form-control  mb-3 form-group" id="product" aria-describedby="Genre" placeholder="Bildpfad">
       <button type="submit" name="newProduct" class="btn btn-primary mx-sm-5 mb-3 form-group">Speichern</button>
+      <?= isset($errors['productName'])?'<div class="error">'. $errors['productName'] . '</div>':''?>
       </form>
     </div>
   </section>
