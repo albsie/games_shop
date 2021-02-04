@@ -24,6 +24,10 @@ footer{
 h2{
   margin: 10vh 0;
 }
-table, th, td {
+table, td {
   border: 1px solid black;
+
+}
+table td{
+  width: 100px;
 }
