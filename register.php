@@ -1,4 +1,5 @@
 <?php
+require_once "config\init.php";
 require_once "config/db.php"; # schmeist ein Fatal Error
 include_once "content/header.php"; # schmeist es ein Warning
 
