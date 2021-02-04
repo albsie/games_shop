@@ -2,10 +2,8 @@
 if(session_id() == '' || !isset($_SESSION)) {
     session_start();
 }
-# root path for the index.php
-define("ROOT_URL", 'games_shop');
-define("ROOT_PATH", "http://localhost/web/git_games_shop/");
-# require_once "config/root_path.php";
+require_once("../config/init.php");
+
 $path_parts = pathinfo($_SERVER['REQUEST_URI']);
 $filename = $path_parts['filename'];
 ?>
