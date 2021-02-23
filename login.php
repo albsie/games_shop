@@ -34,10 +34,17 @@ if(isset($_POST['login'])){
     # filter
     # prepare
     # execute
-    $query = mysqli_query($con, "SELECT id, email, firstname, lastname, password  FROM users WHERE email = '$email'") or die(mysqli_error($con));
-    $data = mysqli_fetch_assoc($query);
+    # problem is mysqli
+    $select = "SELECT id, email, firstname, lastname, password  FROM users WHERE email = :email LIMIT 1;";
+    try{
+      $state = $con->prepare($select);
+      $state->execute(["email" => $email]);
+    } catch (PDOException $e){
+      // error handling code
+    }
+    $data = $state->fetch(PDO::FETCH_ASSOC); // false if no rows else the first row
 
-    if(mysqli_num_rows($query) === 1){
+    if($data !== false){
       $passwordVerify = password_verify($password, $data['password']);
     } else {
       $passwordVerify = false;
