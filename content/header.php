@@ -2,6 +2,8 @@
 if(session_id() == '' || !isset($_SESSION)) {
     session_start();
 }
+// diranme(__FILE__) is the path of the parent directory of "header.php".
+// this does not change even if the file is included,  so it's perfect to set a global static path
 require_once(dirname(__FILE__) . "/../config/init.php");
 
 $path_parts = pathinfo($_SERVER['REQUEST_URI']);

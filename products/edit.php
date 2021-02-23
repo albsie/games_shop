@@ -6,15 +6,33 @@ include_once "../content/header.php";
 
 $select = "SELECT * FROM products";
 
-###  update Befehl für den Button
+
+// returns the result of a prepared query as a PDO Statement object.
+// if an error occurs the error is returned (either as String or False depending on the error)
+function prepare_query(string $query_string, array $query_items){
+  global $con;
+  try {
+    $statement = $con->prepare($query_string);
+    $statement->execute($query_items);
+    return $statement; // that's stupid
+  } catch(PDOException $e){
+    return $e;
+  }
+}
+
+// returns the querys next row as an assoc array
+function query_as_array(PDOStatement $query): array{
+  return $query->fetch(PDO::FETCH_ASSOC);
+}
 
 if (isset($_POST['register'])) {
   $SQL_String = "UPDATE products SET price = :price, amount = :amount WHERE id = :id";
+  $price = $_POST['price'];
+  $amount = $_POST['amount'];
+  $id = $_POST['id'];
+
   try {
     $state = $con->prepare($SQL_String);
-    $price = $_POST['price'];
-    $amount = $_POST['amount'];
-    $id = $_POST['id'];
     $state->execute([
       'price' => $price,
       'amount' => $amount,
@@ -22,8 +40,18 @@ if (isset($_POST['register'])) {
     ]);
   } catch(PDOException $e){
   }
+  
 }
+// creates an assoc array containing all the necessary values
+if (isset($_POST['id'])){
+    $select_str = "SELECT * FROM products WHERE id = :id LIMIT 1;"; // Limit limits the amount of rows in the query result
+    $id = $_POST['id'];
+    $items = ["id" => $id];
+    $query_result = prepare_query($select_str, $items);
 
+    // the mentioned array
+    $query_result = query_as_array($query_result);
+}
  ?>
 <main class="container" id="editMain">
 <section>
@@ -37,89 +65,77 @@ if (isset($_POST['register'])) {
               </option>
             <?php endif; ?>
 
-            <?php foreach ($con->query($select) as $key => $value): ?>
-              <option value=<?=$value['id']?> <?=isset($_POST['id']) && $_POST['id'] == $value['id']  ? "selected='selected'": ""?>>
+            <?php foreach ($con->query("SELECT id, name FROM products;") as $key => $value): ?>
+              <option value=<?=$value['id']?> <?=isset($_POST['id']) && $_POST['id'] == $value['id']  ? "selected": ""?>>
                 <?= $value['name'] ?>
               </option>
                 <?php endforeach ?>
           </select>
           <?php if (isset($_POST["id"])): ?>
             <label for="price">Preis:  </label>
-            <input id="price" type="text" name="price" value="">
+            <input id="price" type="text" name="price" value="<?=isset($_POST['id']) ? $query_result['price'] : "" ?>">
             <label for="amount"> Anzahl: </label>
-            <input id="amount" type="text" name="amount" value="">
+            <input id="amount" type="text" name="amount" value="<?=isset($_POST['id']) ? $query_result['amount'] : "" ?>">
           <button type="submit" name="register" class="btn btn-primary mx-sm-5 mb-3 form-group">Speichern</button>
           <?php endif; ?>
-          </div>
+        </form>
+      </div>
+
           <table>
             <tr>
               <td>Name</td>
               <td>
-                <?php foreach ($con->query($select) as $key => $value): ?>
-                  <?php if (isset($_POST['id']) && $_POST['id'] == $value['id']): ?>
-                      <?= $value['name'] ?>
-                  <?php endif; ?>
-                <?php endforeach ?>
+                <?php if (isset($_POST['id'])): ?>
+                    <?= $query_result['name'] ?>
+                <?php endif; ?>
               </td>
             </tr>
 
             <tr>
               <td>Publisher</td>
               <td>
-                <?php foreach ($con->query($select) as $key => $value): ?>
-                  <?php if (isset($_POST['id']) && $_POST['id'] == $value['id']): ?>
-                      <?= $value['publisher'] ?>
-                  <?php endif; ?>
-                <?php endforeach ?>
+                <?php if (isset($_POST['id'])): ?>
+                    <?= $query_result['publisher'] ?>
+                <?php endif; ?>
               </td>
             </tr>
 
             <tr>
               <td>release</td>
               <td>
-                <?php foreach ($con->query($select) as $key => $value): ?>
-                  <?php if (isset($_POST['id']) && $_POST['id'] == $value['id']): ?>
-                      <?= $value['release_date'] ?>
-                  <?php endif; ?>
-                <?php endforeach ?>
+                <?php if (isset($_POST['id'])): ?>
+                    <?= $query_result['release_date'] ?>
+                <?php endif; ?>
               </td>
             </tr>
 
             <tr>
               <td>Price</td>
               <td>
-                <?php foreach ($con->query($select) as $key => $value): ?>
-                  <?php if (isset($_POST['id']) && $_POST['id'] == $value['id']): ?>
-                      <?= $value['price'] ?>
-                  <?php endif; ?>
-                <?php endforeach ?>
+                <?php if (isset($_POST['id'])): ?>
+                    <?= $query_result['price'] ?>
+                <?php endif; ?>
               </td>
             </tr>
 
             <tr>
               <td>Amount</td>
               <td>
-                <?php foreach ($con->query($select) as $key => $value): ?>
-                  <?php if (isset($_POST['id']) && $_POST['id'] == $value['id']): ?>
-                      <?= $value['amount'] ?>
-                  <?php endif; ?>
-                <?php endforeach ?>
+                <?php if (isset($_POST['id'])): ?>
+                    <?= $query_result['amount'] ?>
+                <?php endif; ?>
               </td>
             </tr>
 
             <tr>
               <td>USK</td>
               <td>
-                <?php foreach ($con->query($select) as $key => $value): ?>
-                  <?php if (isset($_POST['id']) && $_POST['id'] == $value['id']): ?>
-                      <?= $value['usk_id'] ?>
-                  <?php endif; ?>
-                <?php endforeach ?>
+                <?php if (isset($_POST['id'])): ?>
+                    <?= $query_result['usk_id'] ?>
+                <?php endif; ?>
               </td>
             </tr>
           </table>
-    </form>
-
 </section>
 </main>
 
